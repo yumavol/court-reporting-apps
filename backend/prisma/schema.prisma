@@ -40,7 +40,7 @@ model Editor {
 
 model Job {
   id           String       @id @default(cuid())
-  caseName     String
+  name     String
   duration     Float
   locationType LocationType
   city         String?
