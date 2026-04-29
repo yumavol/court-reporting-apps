@@ -1,0 +1,25 @@
+info:
+  name: Insert Job
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: '{{api_url}}/api/jobs'
+  body:
+    type: json
+    data: |-
+      {
+        "caseName": "Smith v. Jones",
+        "durationMinutes": 2.5,
+        "locationType": "PHYSICAL",
+        "city": "New York",
+        "reporterId": "cmoka80i50001z2z2kbuymc8x",
+        "editorId": "cmoka80ia0004z2z2zur7b7u4"
+      }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

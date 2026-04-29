@@ -3,11 +3,11 @@ import { LocationType } from '@/generated/prisma/enums';
 
 export const createJobSchema = z.object({
   caseName: z.string().min(1),
-  duration: z.number().positive(),
+  durationMinutes: z.number().positive(),
   locationType: z.enum(LocationType),
   city: z.string().optional(),
-  reporterId: z.uuid().optional(),
-  editorId: z.uuid().optional(),
+  reporterId: z.string().optional(),
+  editorId: z.string().optional(),
 });
 
 export type CreateJobDto = z.infer<typeof createJobSchema>;
