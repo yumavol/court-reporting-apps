@@ -5,7 +5,7 @@ export class JobService {
   async create(dto: CreateJobDto) {
     return prisma.job.create({
       data: {
-        caseName: dto.caseName,
+        name: dto.caseName,
         duration: dto.duration,
         locationType: dto.locationType,
         city: dto.city,

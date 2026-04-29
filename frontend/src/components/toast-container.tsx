@@ -1,14 +1,13 @@
 import { Flip, ToastContainer as ReactToastify } from 'react-toastify';
 import { createPortal } from 'react-dom';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+function subscribe() {
+  return () => {};
+}
 
 export default function ToastContainer() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
+  const isClient = useSyncExternalStore(subscribe, () => true, () => false);
   return isClient ? <PortalToast /> : null;
 }
 
