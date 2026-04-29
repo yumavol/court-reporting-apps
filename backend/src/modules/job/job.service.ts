@@ -24,6 +24,11 @@ export class JobService {
   }
 
   async findAll() {
-    return prisma.job.findMany();
+    return prisma.job.findMany({
+      include: {
+        reporter: true,
+        editor: true,
+      },
+    });
   }
 }

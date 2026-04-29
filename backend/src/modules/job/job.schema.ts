@@ -6,8 +6,8 @@ export const createJobSchema = z.object({
   durationMinutes: z.number().positive(),
   locationType: z.enum(LocationType),
   city: z.string().optional(),
-  reporterId: z.string().optional(),
-  editorId: z.string().optional(),
+  reporterId: z.cuid().optional(),
+  editorId: z.cuid().optional(),
 });
 
 export type CreateJobDto = z.infer<typeof createJobSchema>;

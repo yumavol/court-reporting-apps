@@ -1,3 +1,6 @@
+import { ReporterResponse } from '@/modules/reporter/reporter.d';
+import { EditorResponse } from '@/modules/editor/editor.d';
+
 export interface JobResponse {
   locationType: LocationType;
   city: string | null;
@@ -9,8 +12,11 @@ export interface JobResponse {
   status: JobStatus;
   createdAt: Date;
   updatedAt: Date;
+  reporter: ReporterResponse | null;
+  editor: EditorResponse | null;
 }
 [];
 
-export type JobInsertResponse = ApiResponse<JobResponse>;
+export type JobInsertResponse = ApiResponse<Omit<JobResponse, 'reporter' | 'editor'>>;
+let data: JobInsertResponse;
 export type JobListResponse = ApiResponse<JobResponse[]>;
