@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
+  "globalEnv": ["DATABASE_URL"],
   "tasks": {
     "dev": {
       "persistent": true,
@@ -12,6 +13,11 @@
       "persistent": true,
       "dependsOn": ["build"]
     },
-    "lint": {}
+    "lint": {},
+    "db:migrate": { "cache": false },
+    "db:migrate:deploy": { "cache": false },
+    "db:generate": { "cache": false },
+    "db:studio": { "persistent": true, "cache": false },
+    "db:reset": { "cache": false }
   }
 }
