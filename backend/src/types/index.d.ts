@@ -1,4 +1,4 @@
-export interface ApiResponse<T = unknown> {
+declare interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   message?: string;
