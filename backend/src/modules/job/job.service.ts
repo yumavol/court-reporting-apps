@@ -1,0 +1,17 @@
+import prisma from '@/lib/prisma';
+import type { CreateJobDto } from '@/modules/job/job.schema';
+
+export class JobService {
+  async create(dto: CreateJobDto) {
+    return prisma.job.create({
+      data: {
+        caseName: dto.caseName,
+        duration: dto.duration,
+        locationType: dto.locationType,
+        city: dto.city,
+        reporterId: dto.reporterId,
+        editorId: dto.editorId,
+      },
+    });
+  }
+}

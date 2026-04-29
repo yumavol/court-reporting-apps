@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { HealthController } from '@/controllers/health.controller';
+import { JobController } from '@/modules/job/job.controller';
 
 const router = Router();
-const healthController = new HealthController();
+const jobController = new JobController();
 
-router.get('/health', (req, res) => healthController.get(req, res));
+router.post('/jobs', (req, res) => jobController.create(req, res));
 
 export default router;
