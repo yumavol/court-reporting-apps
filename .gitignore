@@ -45,3 +45,8 @@ frontend/next-env.d.ts
 
 # editor
 .vscode
+
+# docker postgres data
+postgres_data/
+
+ 
