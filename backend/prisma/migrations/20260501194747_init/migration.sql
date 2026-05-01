@@ -30,7 +30,7 @@ CREATE TABLE "Editor" (
 CREATE TABLE "Job" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "durationMinutes" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "durationMinutes" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "locationType" "LocationType" NOT NULL,
     "city" TEXT,
     "status" "JobStatus" NOT NULL DEFAULT 'NEW',
@@ -46,9 +46,9 @@ CREATE TABLE "Job" (
 CREATE TABLE "Payment" (
     "id" TEXT NOT NULL,
     "jobId" TEXT NOT NULL,
-    "reporterAmount" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "editorAmount" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "totalAmount" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "reporterAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "editorAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "totalAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
