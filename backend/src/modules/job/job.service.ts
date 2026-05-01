@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 import { ValidationError } from '@/lib/errors';
-import type { CreateJobDto, UpdateJobDto } from '@/modules/job/job.schema';
+import type { CreateJobDto, UpdateJobDto, UpdateJobStatusDto } from '@/modules/job/job.schema';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { JobStatus } from '@/generated/prisma/enums';
 
@@ -57,6 +57,14 @@ export class JobService {
       }
       throw error;
     }
+  }
+
+  async updateStatus(id: string, dto: UpdateJobStatusDto) {
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      throw new ValidationError('Job not found', undefined, 404);
+    }
+    return prisma.job.update({ where: { id }, data: { status: dto.status } });
   }
 
   async findAll() {

@@ -10,7 +10,8 @@ const editorController = new EditorController();
 
 router.post('/jobs', (req, res) => jobController.create(req, res));
 router.get('/jobs', (req, res) => jobController.findAll(req, res));
-router.patch('/jobs/assign/:id', (req, res) => jobController.assign(req, res));
+router.patch('/jobs/:id/assign', (req, res) => jobController.assign(req, res));
+router.patch('/jobs/:id/status', (req, res) => jobController.updateStatus(req, res));
 
 router.get('/reporters', (req, res) => reporterController.findAll(req, res));
 

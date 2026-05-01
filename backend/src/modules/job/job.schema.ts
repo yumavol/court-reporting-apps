@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LocationType } from '@/generated/prisma/enums';
+import { JobStatus, LocationType } from '@/generated/prisma/enums';
 
 export const createJobSchema = z.object({
   caseName: z.string().min(1),
@@ -15,3 +15,9 @@ export type CreateJobDto = z.infer<typeof createJobSchema>;
 export const assignJobSchema = createJobSchema.pick({ reporterId: true, editorId: true }).partial();
 
 export type UpdateJobDto = z.infer<typeof assignJobSchema>;
+
+export const updateJobStatusSchema = z.object({
+  status: z.enum(JobStatus),
+});
+
+export type UpdateJobStatusDto = z.infer<typeof updateJobStatusSchema>;
