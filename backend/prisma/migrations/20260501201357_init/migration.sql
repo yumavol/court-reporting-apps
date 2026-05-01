@@ -46,9 +46,9 @@ CREATE TABLE "Job" (
 CREATE TABLE "Payment" (
     "id" TEXT NOT NULL,
     "jobId" TEXT NOT NULL,
-    "reporterAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
-    "editorAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
-    "totalAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "reporterAmount" DECIMAL(15,2) NOT NULL DEFAULT 0,
+    "editorAmount" DECIMAL(15,2) NOT NULL DEFAULT 0,
+    "totalAmount" DECIMAL(15,2) NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

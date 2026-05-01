@@ -25,8 +25,6 @@ export default function Home() {
     locationType: undefined,
   });
 
-  console.log('jobFilter', jobFilter);
-
   const [modalCreate, setModalCreate] = useState(false);
   const [modalManage, setModalManage] = useState(false);
   const [manageData, setManageData] = useState<JobResponse | null>(null);
@@ -244,7 +242,7 @@ function CreateJob({ setShowModal, showModal }: { setShowModal: (show: boolean) 
           </div>
 
           <div>
-            <div className="form-label">Location</div>
+            <div className="form-label">Location Type</div>
             <select
               className={cn('select select-bordered w-full', validate.locationType && 'input-error')}
               value={locationType}
