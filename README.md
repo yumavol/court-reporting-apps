@@ -12,6 +12,7 @@ A monorepo containing the frontend (Next.js) and backend (Express + Prisma) for 
   - [4. Run database migrations and seed](#4-run-database-migrations-and-seed)
 - [Running the project](#running-the-project)
 - [Other commands](#other-commands)
+- [Visual Walkthrough](OUTPUT.md)
 
 ## Prerequisites
 
