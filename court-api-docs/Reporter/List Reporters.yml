@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: '{{api_url}}/api/reporters?preferCity'
+  url: '{{api_url}}/api/reporters?preferCity=New York'
   params:
     - name: preferCity
-      value: ''
+      value: New York
       type: query
   auth: inherit
 

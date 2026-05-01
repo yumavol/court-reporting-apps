@@ -9,10 +9,12 @@ http:
   params:
     - name: status
       value: ''
+      type: query
       enabled: false
       description: 'Filter by job status. Allowed: NEW, ASSIGNED, TRANSCRIBED, REVIEWED, COMPLETED'
     - name: locationType
       value: ''
+      type: query
       enabled: false
       description: 'Filter by job type. Allowed: PHYSICAL, REMOTE'
 
