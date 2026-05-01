@@ -12,6 +12,6 @@ export const createJobSchema = z.object({
 
 export type CreateJobDto = z.infer<typeof createJobSchema>;
 
-export const updateJobSchema = createJobSchema.partial();
+export const assignJobSchema = createJobSchema.pick({ reporterId: true, editorId: true }).partial();
 
-export type UpdateJobDto = z.infer<typeof updateJobSchema>;
+export type UpdateJobDto = z.infer<typeof assignJobSchema>;

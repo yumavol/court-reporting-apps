@@ -6,7 +6,8 @@ const reporterService = new ReporterService();
 
 export class ReporterController {
   async findAll(req: Request, res: Response): Promise<void> {
-    const reporters = await reporterService.findAll();
+    const preferCity = req.query.preferCity as string | undefined;
+    const reporters = await reporterService.findAll(preferCity);
     const response: ReporterListResponse = {
       success: true,
       data: reporters,

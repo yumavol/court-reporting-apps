@@ -1,0 +1,26 @@
+info:
+  name: Assign Job
+  type: http
+  seq: 3
+
+http:
+  method: PATCH
+  url: '{{api_url}}/api/jobs/assign/:id'
+  params:
+    - name: id
+      value: cmokc89ic0000jfz222ebtqzz
+      type: path
+  body:
+    type: form-urlencoded
+    data:
+      - name: reporterId
+        value: cmoka80i60002z2z25infvasy
+        disabled: true
+      - name: editorId
+        value: cmoka80i60002z2z25infvasy
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
