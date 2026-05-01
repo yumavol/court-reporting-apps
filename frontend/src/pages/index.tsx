@@ -8,7 +8,8 @@ import Modal from '@/components/modal';
 import { LOCATION_OPTIONS, LOCATION_TYPE_OPTIONS } from '@/models/locations';
 import SimpleReactValidator from 'simple-react-validator';
 import { alertToast, formatMoney } from '@/helper';
-import { JobStatusBadge, LocationTypeBadge } from '@/models/statuses';
+import { JOB_STATUS, JobStatusBadge, LocationTypeBadge } from '@/models/statuses';
+import Link from 'next/link';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,13 +17,23 @@ const geistSans = Geist({
 });
 
 export default function Home() {
+  const [jobFilter, setJobFilter] = useState<{
+    status: string | undefined;
+    locationType: string | undefined;
+  }>({
+    status: undefined,
+    locationType: undefined,
+  });
+
+  console.log('jobFilter', jobFilter);
+
   const [modalCreate, setModalCreate] = useState(false);
   const [modalManage, setModalManage] = useState(false);
   const [manageData, setManageData] = useState<JobResponse | null>(null);
   const { data: jobs, isLoading } = useQuery<JobResponse[]>({
-    queryKey: ['jobs'],
+    queryKey: ['jobs', jobFilter],
     queryFn: async () => {
-      const response = await httpGet('/jobs').then((res) => res.data);
+      const response = await httpGet('/jobs', false, jobFilter).then((res) => res.data);
       return response.data;
     },
   });
@@ -30,12 +41,56 @@ export default function Home() {
   return (
     <main className={cn(geistSans.variable, 'min-h-screen bg-base-100 font-sans')}>
       <div className="max-w-6xl mx-auto px-4 py-10">
-        <h1 className="text-4xl font-bold text-center mb-8">Court Reporting Apps</h1>
+        <h1 className="text-4xl font-bold text-center">Court Reporting Apps</h1>
+        <div className="flex items-center justify-center gap-3 mb-8 pt-4">
+          <div className="text-gray-400">Dashboard</div>
+          <Link className="link link-primary" href="/job-earning">
+            Earning Report
+          </Link>
+        </div>
 
-        <div className="flex justify-end mb-4">
-          <button className="btn btn-primary" onClick={() => setModalCreate(true)}>
-            Create Job
-          </button>
+        <div className="flex justify-between mb-4">
+          <div className="flex-1">
+            <div>
+              <button
+                className={cn('btn btn-sm mr-2 mb-2', jobFilter.status === undefined ? 'btn-primary' : 'btn-outline')}
+                onClick={() => setJobFilter({ ...jobFilter, status: undefined })}
+              >
+                All Status
+              </button>
+              {Object.values(JOB_STATUS).map((status) => (
+                <button
+                  key={status.value}
+                  className={cn('btn btn-sm mr-2 mb-2', jobFilter.status === status.value ? 'btn-primary' : 'btn-outline')}
+                  onClick={() => setJobFilter({ ...jobFilter, status: status.value })}
+                >
+                  {status.label}
+                </button>
+              ))}
+            </div>
+            <div>
+              <button
+                className={cn('btn btn-sm mr-2 mb-2', jobFilter.locationType === undefined ? 'btn-primary' : 'btn-outline')}
+                onClick={() => setJobFilter({ ...jobFilter, locationType: undefined })}
+              >
+                All Location Types
+              </button>
+              {Object.values(LOCATION_TYPE_OPTIONS).map((item) => (
+                <button
+                  key={item.value}
+                  className={cn('btn btn-sm mr-2 mb-2', jobFilter.locationType === item.value ? 'btn-primary' : 'btn-outline')}
+                  onClick={() => setJobFilter({ ...jobFilter, locationType: item.value })}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <button className="btn btn-primary" onClick={() => setModalCreate(true)}>
+              Create Job
+            </button>
+          </div>
         </div>
 
         <div className="card bg-base-100 shadow border border-base-200 overflow-hidden">
