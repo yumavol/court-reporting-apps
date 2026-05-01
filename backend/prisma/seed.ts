@@ -2,12 +2,26 @@ import prisma from '../src/lib/prisma';
 import { LOCATION_OPTIONS } from '../src/models/locations';
 
 const reporters = [
-  { name: 'Alice Johnson', location: LOCATION_OPTIONS[0] },
-  { name: 'Bob Martinez', location: LOCATION_OPTIONS[1] },
-  { name: 'Carol White', location: LOCATION_OPTIONS[2] },
+  { name: 'Alice Johnson', location: LOCATION_OPTIONS[0], available: true },
+  { name: 'Bob Martinez', location: LOCATION_OPTIONS[1], available: true },
+  { name: 'Carol White', location: LOCATION_OPTIONS[2], available: false },
+  { name: 'James Nguyen', location: LOCATION_OPTIONS[3], available: true },
+  { name: 'Sofia Patel', location: LOCATION_OPTIONS[4], available: false },
+  { name: 'Marcus Thompson', location: LOCATION_OPTIONS[5], available: true },
+  { name: 'Linda Park', location: LOCATION_OPTIONS[6], available: true },
+  { name: 'Derek Okafor', location: LOCATION_OPTIONS[7], available: false },
+  { name: 'Rachel Kim', location: LOCATION_OPTIONS[8], available: true },
+  { name: 'Tom Vasquez', location: LOCATION_OPTIONS[9], available: true },
 ];
 
-const editors = [{ name: 'David Lee' }, { name: 'Eva Chen' }, { name: 'Frank Brown' }];
+const editors = [
+  { name: 'David Lee' },
+  { name: 'Eva Chen' },
+  { name: 'Frank Brown' },
+  { name: 'Grace Obi' },
+  { name: 'Henry Mills' },
+  { name: 'Isla Torres' },
+];
 
 async function main() {
   for (const reporter of reporters) {

@@ -74,6 +74,7 @@ export class JobService {
         editor: true,
         payment: true,
       },
+      orderBy: { updatedAt: 'desc' },
     });
   }
 }
