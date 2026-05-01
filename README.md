@@ -52,6 +52,7 @@ npm install
 
 ```bash
 npm run db:migrate
+npm run db:generate
 npm run db:seed
 ```
 
@@ -78,6 +79,7 @@ This starts both the frontend and backend concurrently via Turborepo:
 | `npm run lint`           | Lint all packages                              |
 | `npm run db:studio`      | Open Prisma Studio (database GUI)              |
 | `npm run db:migrate`     | Run pending migrations (dev)                   |
+| `npm run db:generate`    | Generate Prisma client from schema             |
 | `npm run db:migrate:deploy` | Deploy migrations (production)              |
 | `npm run db:reset`       | Reset the database and re-run all migrations   |
 | `npm run db:seed`        | Seed the database with initial data            |
