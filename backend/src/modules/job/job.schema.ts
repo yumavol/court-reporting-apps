@@ -21,3 +21,10 @@ export const updateJobStatusSchema = z.object({
 });
 
 export type UpdateJobStatusDto = z.infer<typeof updateJobStatusSchema>;
+
+export const listJobsQuerySchema = z.object({
+  status: z.enum(JobStatus).optional(),
+  locationType: z.enum(LocationType).optional(),
+});
+
+export type ListJobsQueryDto = z.infer<typeof listJobsQuerySchema>;

@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 import { ValidationError } from '@/lib/errors';
-import type { CreateJobDto, UpdateJobDto, UpdateJobStatusDto } from '@/modules/job/job.schema';
+import type { CreateJobDto, UpdateJobDto, UpdateJobStatusDto, ListJobsQueryDto } from '@/modules/job/job.schema';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { JobStatus } from '@/generated/prisma/enums';
 
@@ -67,8 +67,12 @@ export class JobService {
     return prisma.job.update({ where: { id }, data: { status: dto.status } });
   }
 
-  async findAll() {
+  async findAll(query: ListJobsQueryDto) {
     return prisma.job.findMany({
+      where: {
+        ...(query.status && { status: query.status }),
+        ...(query.locationType && { locationType: query.locationType }),
+      },
       include: {
         reporter: true,
         editor: true,

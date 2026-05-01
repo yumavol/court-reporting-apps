@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { JobService } from '@/modules/job/job.service';
 import { z } from 'zod';
-import { createJobSchema, assignJobSchema, updateJobStatusSchema } from '@/modules/job/job.schema';
+import { createJobSchema, assignJobSchema, updateJobStatusSchema, listJobsQuerySchema } from '@/modules/job/job.schema';
 import { JobInsertResponse, JobListResponse } from './job';
 
 const jobService = new JobService();
@@ -43,8 +43,13 @@ export class JobController {
     res.status(200).json(response);
   }
 
-  async findAll(_req: Request, res: Response): Promise<void> {
-    const jobs = await jobService.findAll();
+  async findAll(req: Request, res: Response): Promise<void> {
+    const result = listJobsQuerySchema.safeParse(req.query);
+    if (!result.success) {
+      res.status(400).json({ success: false, errors: z.flattenError(result.error).fieldErrors });
+      return;
+    }
+    const jobs = await jobService.findAll(result.data);
     const response: JobListResponse = {
       success: true,
       data: jobs,
