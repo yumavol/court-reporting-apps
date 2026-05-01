@@ -20,8 +20,18 @@
   }
 }
 
+@utility form-label {
+  @apply block text-sm font-medium text-gray-800 mb-1;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.input,
+.select {
+  @apply -outline-offset-1 placeholder:text-gray-300;
+  @apply not-[.input-error]:focus:outline-sky-600 not-[.input-error]:focus:border-sky-600;
 }

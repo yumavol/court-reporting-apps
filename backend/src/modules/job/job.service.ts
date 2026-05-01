@@ -72,6 +72,7 @@ export class JobService {
       include: {
         reporter: true,
         editor: true,
+        payment: true,
       },
     });
   }

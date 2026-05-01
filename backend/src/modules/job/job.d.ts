@@ -14,9 +14,10 @@ export interface JobResponse {
   updatedAt: Date;
   reporter: ReporterResponse | null;
   editor: EditorResponse | null;
+  payment: Payment | null;
 }
 [];
 
-export type JobInsertResponse = ApiResponse<Omit<JobResponse, 'reporter' | 'editor'>>;
+export type JobInsertResponse = ApiResponse<Omit<JobResponse, 'reporter' | 'editor' | 'payment'>>;
 let data: JobInsertResponse;
 export type JobListResponse = ApiResponse<JobResponse[]>;

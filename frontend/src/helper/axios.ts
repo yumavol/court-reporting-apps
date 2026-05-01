@@ -6,7 +6,7 @@ export const JWT_KEY = 'access_token';
 export const REFRESH_TOKEN_KEY = 'refresh_token';
 export const TOKEN_PREFIX = 'Bearer ';
 
-axios.defaults.baseURL = process.env.BASE_URL;
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 60000; // 60 seconds
 

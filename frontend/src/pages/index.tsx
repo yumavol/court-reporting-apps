@@ -1,78 +1,158 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+/* eslint-disable react-hooks/refs */
+import { Geist, Geist_Mono } from 'next/font/google';
+import cn from 'classnames';
+import { useQuery } from '@tanstack/react-query';
+import { httpGet } from '@/helper/axios';
+import { useRef, useState } from 'react';
+import Modal from '@/components/modal';
+import { LOCATION_OPTIONS, LOCATION_TYPE_OPTIONS } from '@/models/locations';
+import SimpleReactValidator from 'simple-react-validator';
+import { alertToast } from '@/helper';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export default function Home() {
+  const [modalCreate, setModalCreate] = useState(false);
+  const { data: jobs } = useQuery({
+    queryKey: ['test'],
+    queryFn: async () => {
+      const response = await httpGet('/jobs').then((res) => res.data);
+      return response.data;
+    },
+  });
+
+  console.log(jobs);
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      <div className={cn(geistSans.variable, geistMono.variable, 'min-h-screen bg-background font-sans')}>
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-4xl font-bold text-center mt-20 pb-6">Court Reporting Apps</h1>
+          <div className="flex justify-end">
+            <button className="btn btn-primary" onClick={() => setModalCreate(true)}>
+              Create Job
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </div>
+
+      <CreateJob setShowModal={setModalCreate} showModal={modalCreate} />
+    </main>
+  );
+}
+
+function CreateJob({ setShowModal, showModal }: { setShowModal: (show: boolean) => void; showModal: boolean }) {
+  const [, rerender] = useState(0);
+  const validator = useRef(new SimpleReactValidator());
+
+  const [caseName, setCaseName] = useState('');
+  const [duration, setDuration] = useState('');
+  const [locationType, setLocationType] = useState('');
+  const [city, setCity] = useState('');
+
+  const performSubmit = () => {
+    if (!validator.current.allValid()) {
+      validator.current.showMessages();
+      rerender((prev) => prev + 1);
+      alertToast('error', 'Please fill in all required fields');
+    }
+  };
+
+  const validateConfig = { className: 'text-red-500 text-sm' };
+
+  const validate = {
+    caseName: validator.current.message('caseName', caseName, 'required', validateConfig),
+    duration: validator.current.message('duration', duration, 'required|numeric', validateConfig),
+    city: validator.current.message('city', city, 'required', validateConfig),
+    locationType: validator.current.message('type', locationType, 'required', validateConfig),
+  };
+
+  return (
+    <Modal setShowModal={setShowModal} showModal={showModal} size="md" title="Create Job">
+      <div className="flex flex-col gap-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            performSubmit();
+          }}
+          className="flex flex-col gap-4"
+        >
+          <div>
+            <div className="form-label">Case name</div>
+            <input
+              type="text"
+              placeholder="Case Name"
+              className={cn('input input-bordered w-full', validate.caseName && 'input-error')}
+              value={caseName}
+              onChange={(e) => setCaseName(e.target.value)}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            {validate.caseName}
+          </div>
+
+          <div>
+            <div className="form-label">Duration (minutes)</div>
+            <input
+              placeholder="Duration (minutes)"
+              className={cn('input input-bordered w-full', validate.duration && 'input-error')}
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+            {validate.duration}
+          </div>
+
+          <div>
+            <div className="form-label">Location</div>
+            <select
+              className={cn('select select-bordered w-full', validate.locationType && 'input-error')}
+              value={locationType}
+              onChange={(e) => setLocationType(e.target.value)}
+            >
+              <option disabled value="">
+                Select Location
+              </option>
+              {LOCATION_TYPE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            {validate.locationType}
+          </div>
+
+          <div>
+            <div className="form-label">City</div>
+            <select
+              className={cn('select select-bordered w-full', validate.city && 'input-error')}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            >
+              <option disabled value="">
+                Select City
+              </option>
+              {LOCATION_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            {validate.city}
+          </div>
+
+          <div className=" w-full pt-4">
+            <button type="submit" className="btn btn-primary w-full">
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </Modal>
   );
 }
