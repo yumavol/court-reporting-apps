@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: '{{api_url}}/api/reporters?preferCity=New York'
+  url: "{{api_url}}/api/reporters?preferCity=New York"
   params:
     - name: preferCity
       value: New York

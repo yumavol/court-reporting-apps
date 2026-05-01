@@ -5,7 +5,7 @@ info:
 
 http:
   method: PATCH
-  url: '{{api_url}}/api/jobs/:id/status'
+  url: "{{api_url}}/api/jobs/:id/status"
   params:
     - name: id
       value: cmokc89ic0000jfz222ebtqzz

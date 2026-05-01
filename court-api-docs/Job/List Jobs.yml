@@ -1,22 +1,22 @@
 info:
   name: List Jobs
   type: http
+  seq: 1
 
 http:
   method: GET
-  url: '{{api_url}}/api/jobs'
-  auth: inherit
+  url: "{{api_url}}/api/jobs?status=NEW"
   params:
     - name: status
-      value: ''
+      value: NEW
       type: query
-      enabled: false
-      description: 'Filter by job status. Allowed: NEW, ASSIGNED, TRANSCRIBED, REVIEWED, COMPLETED'
+      description: "Filter by job status. Allowed: NEW, ASSIGNED, TRANSCRIBED, REVIEWED, COMPLETED"
     - name: locationType
-      value: ''
+      value: ""
       type: query
-      enabled: false
-      description: 'Filter by job type. Allowed: PHYSICAL, REMOTE'
+      description: "Filter by job type. Allowed: PHYSICAL, REMOTE"
+      disabled: true
+  auth: inherit
 
 runtime:
   variables:
