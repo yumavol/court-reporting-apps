@@ -1,0 +1,22 @@
+info:
+  name: Calculate Payment
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: '{{api_url}}/api/payments/calculate'
+  body:
+    type: json
+    data: |
+      {
+        "jobId": "cmokc89ic0000jfz222ebtqzz",
+        "reporterRatePerMinute": 2000,
+        "editorFlatFee": 50000
+      }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
